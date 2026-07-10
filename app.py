@@ -16,6 +16,68 @@ def load_model():
 
 model = load_model()
 
+def create_pdf(result, confidence, severity):
+
+    buffer = BytesIO()
+
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+
+    pdf.setFont("Helvetica-Bold", 18)
+    pdf.drawString(
+        80,
+        750,
+        "AI Structural Health Inspection Report"
+    )
+
+    pdf.setFont("Helvetica", 12)
+
+    pdf.drawString(
+        80,
+        700,
+        f"Date: {datetime.now().strftime('%d-%m-%Y')}"
+    )
+
+    pdf.drawString(
+        80,
+        670,
+        f"Prediction: {result}"
+    )
+
+    pdf.drawString(
+        80,
+        640,
+        f"Confidence: {confidence:.2f}%"
+    )
+
+    pdf.drawString(
+        80,
+        610,
+        f"Risk Level: {severity}"
+    )
+
+    pdf.drawString(
+        80,
+        570,
+        "Recommendation:"
+    )
+
+    if result == "Crack":
+        recommendation = "Structural inspection recommended."
+    else:
+        recommendation = "Continue regular monitoring."
+
+    pdf.drawString(
+        80,
+        540,
+        recommendation
+    )
+
+    pdf.save()
+
+    buffer.seek(0)
+
+    return buffer
+
 class_names = ["No Crack", "Crack"]
 
 st.set_page_config(page_title="AI Structural Health Monitoring")
