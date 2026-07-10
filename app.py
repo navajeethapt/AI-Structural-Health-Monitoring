@@ -5,7 +5,11 @@ import numpy as np
 from PIL import Image
 
 # Load model
-model = tf.keras.models.load_model("crack_detector.keras")
+@st.cache_resource
+def load_model():
+    return tf.keras.models.load_model("crack_detector.keras")
+
+model = load_model()
 
 class_names = ["No Crack", "Crack"]
 
