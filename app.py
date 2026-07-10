@@ -17,6 +17,35 @@ def load_model():
 
 model = load_model()
 
+def highlight_cracks(image):
+
+    # Convert PIL image to OpenCV format
+    img = np.array(image)
+
+    # Convert RGB to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    # Reduce noise
+    blur = cv2.GaussianBlur(
+        gray,
+        (5,5),
+        0
+    )
+
+    # Detect edges
+    edges = cv2.Canny(
+        blur,
+        50,
+        150
+    )
+
+    # Create red highlight layer
+    highlighted = img.copy()
+
+    highlighted[edges > 0] = [255, 0, 0]
+
+    return highlighted
+
 def create_pdf(result, confidence, severity):
 
     buffer = BytesIO()
