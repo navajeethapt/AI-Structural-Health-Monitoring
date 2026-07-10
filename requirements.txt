@@ -5,3 +5,4 @@ opencv-python-headless
 Pillow
 scikit-learn
 tensorflow-cpu==2.16.1
+reportlab
