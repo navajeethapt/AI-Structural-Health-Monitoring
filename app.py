@@ -104,12 +104,12 @@ if uploaded_file is not None:
 
     result = class_names[np.argmax(score)]
 
-    st.subheader("Structural Analysis Result")
+        st.subheader("Structural Analysis Result")
 
-if result == "Crack":
-    st.error("🔴 Crack Detected")
-else:
-    st.success("🟢 No Crack Detected")
+    if result == "Crack":
+        st.error("🔴 Crack Detected")
+    else:
+        st.success("🟢 No Crack Detected")
 
     st.subheader("Confidence")
     st.write(f"{confidence:.2f}%")
@@ -123,41 +123,45 @@ else:
 
     st.subheader("Risk Assessment")
 
-if confidence < 70:
-    st.info("🟢 LOW RISK")
-elif confidence < 90:
-    st.warning("🟡 MEDIUM RISK")
-else:
-    st.error("🔴 HIGH RISK")
+    if confidence < 70:
+        st.info("🟢 LOW RISK")
+    elif confidence < 90:
+        st.warning("🟡 MEDIUM RISK")
+    else:
+        st.error("🔴 HIGH RISK")
 
-st.write(
-    "Recommendation: "
-    + (
-        "Monitor periodically."
-        if confidence < 70
-        else "Schedule structural inspection."
-        if confidence < 90
-        else "Immediate structural inspection required."
+    st.write(
+        "Recommendation: "
+        + (
+            "Monitor periodically."
+            if confidence < 70
+            else "Schedule structural inspection."
+            if confidence < 90
+            else "Immediate structural inspection required."
+        )
     )
-)
 
-    if severity=="🟢 LOW":
+    st.subheader("Severity")
+    st.write(severity)
+
+    if severity == "🟢 LOW":
         st.info("Recommendation: Monitor periodically.")
-    elif severity=="🟡 MEDIUM":
+
+    elif severity == "🟡 MEDIUM":
         st.warning("Recommendation: Inspect within 30 days.")
+
     else:
         st.error("Recommendation: Immediate structural inspection required.")
 
-
     pdf_file = create_pdf(
-    result,
-    confidence,
-    severity
-)
+        result,
+        confidence,
+        severity
+    )
 
-st.download_button(
-    label="📄 Download Inspection Report",
-    data=pdf_file,
-    file_name="Structural_Inspection_Report.pdf",
-    mime="application/pdf"
-)
+    st.download_button(
+        label="📄 Download Inspection Report",
+        data=pdf_file,
+        file_name="Structural_Inspection_Report.pdf",
+        mime="application/pdf"
+    )
