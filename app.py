@@ -37,8 +37,12 @@ if uploaded_file is not None:
 
     result = class_names[np.argmax(score)]
 
-    st.subheader("Prediction")
-    st.success(result)
+    st.subheader("Structural Analysis Result")
+
+if result == "Crack":
+    st.error("🔴 Crack Detected")
+else:
+    st.success("🟢 No Crack Detected")
 
     st.subheader("Confidence")
     st.write(f"{confidence:.2f}%")
@@ -50,8 +54,25 @@ if uploaded_file is not None:
     else:
         severity = "🔴 HIGH"
 
-    st.subheader("Severity")
-    st.write(severity)
+    st.subheader("Risk Assessment")
+
+if confidence < 70:
+    st.info("🟢 LOW RISK")
+elif confidence < 90:
+    st.warning("🟡 MEDIUM RISK")
+else:
+    st.error("🔴 HIGH RISK")
+
+st.write(
+    "Recommendation: "
+    + (
+        "Monitor periodically."
+        if confidence < 70
+        else "Schedule structural inspection."
+        if confidence < 90
+        else "Immediate structural inspection required."
+    )
+)
 
     if severity=="🟢 LOW":
         st.info("Recommendation: Monitor periodically.")
