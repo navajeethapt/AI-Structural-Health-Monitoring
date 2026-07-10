@@ -147,3 +147,17 @@ st.write(
         st.warning("Recommendation: Inspect within 30 days.")
     else:
         st.error("Recommendation: Immediate structural inspection required.")
+
+
+    pdf_file = create_pdf(
+    result,
+    confidence,
+    severity
+)
+
+st.download_button(
+    label="📄 Download Inspection Report",
+    data=pdf_file,
+    file_name="Structural_Inspection_Report.pdf",
+    mime="application/pdf"
+)
