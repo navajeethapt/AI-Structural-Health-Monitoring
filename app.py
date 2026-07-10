@@ -122,6 +122,16 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
+        highlighted_image = highlight_cracks(image)
+
+    st.subheader("🔍 Crack Location Highlight")
+
+    st.image(
+        highlighted_image,
+        caption="Detected crack regions highlighted",
+        use_container_width=True
+    )
+
     img = image.resize((128,128))
     img_array = tf.keras.preprocessing.image.img_to_array(img)
     img_array = np.expand_dims(img_array,0)
