@@ -3,6 +3,7 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+import cv2
 
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
