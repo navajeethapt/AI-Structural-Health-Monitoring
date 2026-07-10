@@ -4,6 +4,11 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from datetime import datetime
+
 # Load model
 @st.cache_resource
 def load_model():
